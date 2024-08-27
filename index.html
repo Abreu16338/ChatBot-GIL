@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gorgeous Girl!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .chat-container {
+            max-width: 600px;
+            margin: 50px auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        .chat-box {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+        .chat-message {
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            max-width: 80%;
+        }
+        .bot-message {
+            background-color: #007bff;
+            color: #fff;
+            margin-left: auto;
+            text-align: right;
+        }
+        .user-message {
+            background-color: #e9ecef;
+            color: #000;
+        }
+        .chat-input {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-input input {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .chat-input button {
+            flex-shrink: 0;
+        }
+        .options-container {
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        .option-button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Existing Navbar Code -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html" style="display: flex; align-items: center;">
+                <img id="perfil" width="10%" src="img/img1.jpg" alt="Logo" class="d-inline-block align-text-top" style="border-radius: 5px;">
+                <p class="moving-text">My Gorgeous Girl!</p>
+                <img id="perfil" width="10%" src="img/img1.jpg" alt="Logo" class="d-inline-block align-text-top" style="border-radius: 5px;">
+            </a>
+        </div>
+    </nav>
+
+    <!-- Button to Open Camera -->
+    <div class="container text-center mt-5 mb-5">
+        <form>
+            <input type="file" accept="image/*" capture="environment" style="display: none;" id="cameraInput">
+            <label id="seeyou" for="cameraInput" class="btn btn-primary btn-lg">Lemme see you</label>
+        </form>
+    </div>
+
+    <!-- Chatbot Section -->
+    <div class="chat-container">
+        <h2>Ask GIL!</h2>
+        <div class="chat-box" id="chatBox">
+            <!-- Chat messages will appear here -->
+        </div>
+        <div class="options-container">
+            <button class="btn btn-primary option-button" onclick="sendOption('Option 1')">I miss you!</button>
+            <button class="btn btn-primary option-button" onclick="sendOption('Option 2')">I'm horny!</button>
+            <button class="btn btn-primary option-button" onclick="sendOption('Option 3')">I wanna a hug!</button>
+            <button class="btn btn-primary option-button" onclick="sendOption('Option 4')">Come here!</button>
+        </div>
+    </div>
+
+    <!-- Modal to Display Captured Photo -->
+    <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="photoModalLabel">Captured Photo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="capturedImage" class="img-fluid" src="" alt="Captured Photo">
+                    <div class="mt-3">
+                        <h6>Select an Option:</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="options" id="option1" value="Body pic">
+                            <label class="form-check-label" for="option1">
+                                Body pic
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="options" id="option2" value="Face pic">
+                            <label class="form-check-label" for="option2">
+                                Face pic
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="options" id="option3" value="Pretty pic">
+                            <label class="form-check-label" for="option3">
+                                Pretty pic
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="options" id="option4" value="Bum pic">
+                            <label class="form-check-label" for="option4">
+                                Bum pic
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="options" id="option5" value="Tits pic">
+                            <label class="form-check-label" for="option5">
+                                Tits pic
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="options" id="option6" value="Nigga pic">
+                            <label class="form-check-label" for="option6">
+                                Nigga pic
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="options" id="option7" value="Your other bf pic">
+                            <label class="form-check-label" for="option7">
+                                Your other bf pic
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="options" id="option8" value="USSS pic">
+                            <label class="form-check-label" for="option8">
+                                Your other bf pic
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="confirmSelection">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals for Each Option -->
+    <div class="modal fade" id="optionModalBodyPic" tabindex="-1" aria-labelledby="optionModalBodyPicLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="optionModalBodyPicLabel">Body Pic</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/body-pic.jpg" class="img-fluid" alt="Body Pic">
+                    <p>Look how fucking hot and gorgeous your body is baby girl. You're a fucking goddess. You're the defenition of perfection. Labbbb you o much baba!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="optionModalFacePic" tabindex="-1" aria-labelledby="optionModalFacePicLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="optionModalFacePicLabel">Face Pic</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/face-pic.jpg" class="img-fluid" alt="Face Pic">
+                    <p>Look at my pretty, gorgeous, beautiful, wonderful, perfect, amazing, cute and miraculous wifeeee!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="optionModalPrettyPic" tabindex="-1" aria-labelledby="optionModalFacePicLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="optionModalFacePicLabel">Pretty Pic</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/face-pic.jpg" class="img-fluid" alt="Face Pic">
+                    <p>Look at your Pretty and Gorgeous face baba. You're seriously de most beautiful women in the whole world and your pretty face is more valuable than Monalisa herself because you are infinitely more beautiful than her </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="optionModalBumPic" tabindex="-1" aria-labelledby="optionModalFacePicLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="optionModalFacePicLabel">Bum Pic</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/face-pic.jpg" class="img-fluid" alt="Face Pic">
+                    <p>OOOOMMMMMMGGGGGGGG!!!!!!!!!!!!! Look at that fucking massive bummmmmmm. You have the biggest bum in the whole universe baba, that's so fucking perfect u have no ideia how i fucking love ittttttt. you are simply the most perfect woman ever with the most perfect body ever.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="optionModalTitsPic" tabindex="-1" aria-labelledby="optionModalFacePicLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="optionModalFacePicLabel">Tits Pic</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/face-pic.jpg" class="img-fluid" alt="Face Pic">
+                    <p>You know i'm gonna lick all that shittt. Fuckinggg massive tits so gorgeous and perfect! Labbbb you more than anything babaaaaaa!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="optionModalNiggaPic" tabindex="-1" aria-labelledby="optionModalFacePicLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="optionModalFacePicLabel">Nigga Pic</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/face-pic.jpg" class="img-fluid" alt="Face Pic">
+                    <p>Now it deppends of what picture did you choose. If it is a picture of youuuuuuuuu:
+                        I fucking love you more than anything in this worlddddddd myyyyyy NNNNNNNNNNNNIIIIIIIIIIIIGGGGGGGGGGGAAAAAAAA!
+                        If not: SORRRYYY i didn't mean it to offend you.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="optionModalOtherBfPic" tabindex="-1" aria-labelledby="optionModalFacePicLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="optionModalFacePicLabel">Other BF Pic</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/face-pic.jpg" class="img-fluid" alt="Face Pic">
+                    <p>Fuckkkk youuuuuuuuuuuuuuuu! You're fucking mineee foreverrrrrrr. Fuck that litle pic of shit motherfucker that lick to put dicks on himself you're fucking mine forever and i'll kill who even smell the same air as you.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="optionModalUSSSPic" tabindex="-1" aria-labelledby="optionModalFacePicLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="optionModalFacePicLabel">UUSSSSS Pic</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/face-pic.jpg" class="img-fluid" alt="Face Pic">
+                    <p>Look at usssss!! We are the perfect couple everrrr. We were made to each other and i cant imagine my life without you. I wanna marry you, have kids, have a house and spend the rest of my life with youuuuuuuuu my gorgeous girl!!!! Laaabbbbbb you more than anyhting baby girllllllllll.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add similar modals for other options here -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('cameraInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('capturedImage').src = e.target.result;
+                    const modal = new bootstrap.Modal(document.getElementById('photoModal'));
+                    modal.show();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('confirmSelection').addEventListener('click', function() {
+            const selectedOption = document.querySelector('input[name="options"]:checked');
+            if (selectedOption) {
+                const optionValue = selectedOption.value;
+                const modals = {
+                    'Body pic': 'optionModalBodyPic',
+                    'Face pic': 'optionModalFacePic',
+                    'Pretty pic': 'optionModalPrettyPic',
+                    'Bum pic': 'optionModalBumPic',
+                    'Tits pic': 'optionModalTitsPic',
+                    'Nigga pic': 'optionModalNiggaPic',
+                    'Your other bf pic': 'optionModalOtherBfPic',
+                    'USSS pic': 'optionModalUSSSPic'
+                };
+                const modalId = modals[optionValue];
+                if (modalId) {
+                    const photoModal = bootstrap.Modal.getInstance(document.getElementById('photoModal'));
+                    photoModal.hide();
+                    const specificModal = new bootstrap.Modal(document.getElementById(modalId));
+                    specificModal.show();
+                }
+            }
+        });
+        function sendOption(option) {
+            const chatBox = document.getElementById('chatBox');
+            const userMessage = document.createElement('div');
+            userMessage.className = 'chat-message user-message';
+            userMessage.textContent = `User: ${option}`;
+            chatBox.appendChild(userMessage);
+            
+            const botResponse = getBotResponse(option);
+            const botMessage = document.createElement('div');
+            botMessage.className = 'chat-message bot-message';
+            botMessage.textContent = `Bot: ${botResponse}`;
+            chatBox.appendChild(botMessage);
+            
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function getBotResponse(option) {
+            const responses = {
+                'Option 1': 'Response to Option 1',
+                'Option 2': 'Response to Option 2',
+                'Option 3': 'Response to Option 3',
+                'Option 4': 'Response to Option 4'
+            };
+            return responses[option] || 'Sorry, I did not understand your choice.';
+        }
+    </script>
+</body>
+</html>
