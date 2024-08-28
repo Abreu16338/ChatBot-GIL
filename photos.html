@@ -74,7 +74,7 @@
             margin-bottom: 10px;
         }
         .card-img-top {
-            height: 200px; /* Adjusted to make vertical images fit better */
+            height: 200px; /* Ajustado para se adequar melhor às imagens verticais */
             object-fit: cover;
         }
         .card-body {
@@ -83,6 +83,8 @@
         }
         .photo-card {
             position: relative;
+            flex: 1 1 calc(50% - 10px); /* Dois cards por linha */
+            box-sizing: border-box;
         }
         .btn-delete {
             position: absolute;
@@ -95,17 +97,20 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        @media (max-width: 768px) {
-            .photo-card {
-                flex: 1 1 calc(50% - 10px); /* Two cards per row */
-            }
-        }
+        /* Em telas menores que 576px, cards em uma única coluna */
         @media (max-width: 576px) {
             .photo-card {
-                flex: 1 1 100%; /* One card per row on extra small screens */
+                flex: 1 1 calc(50% - 10px); /* Dois cards por linha */
+            }
+        }
+        /* Ajuste para telas um pouco maiores, mas ainda pequenas */
+        @media (min-width: 577px) and (max-width: 768px) {
+            .photo-card {
+                flex: 1 1 calc(50% - 10px); /* Dois cards por linha */
             }
         }
     </style>
+    
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">

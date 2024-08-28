@@ -95,13 +95,34 @@
         </div>
     </nav>
 
-    <!-- Button to Open Camera -->
+    <!-- Button to Open Camera or File Selector -->
     <div class="container text-center mt-5 mb-5">
-        <form>
-            <input type="file" accept="image/*" capture="environment" style="display: none;" id="cameraInput">
-            <label id="seeyou" for="cameraInput" class="btn btn-primary btn-lg"><i class="fa-solid fa-camera"></i></label>
-        </form>
+        <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#photoOptionsModal">
+            <i class="fa-solid fa-camera"></i>
+        </button>
     </div>
+
+    <!-- Modal for Photo Options -->
+    <div class="modal fade" id="photoOptionsModal" tabindex="-1" aria-labelledby="photoOptionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="photoOptionsModalLabel">Choose an Option</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <button class="btn btn-primary w-100 mb-2" id="takePhotoBtn"><i class="fa-solid fa-camera"></i> Take a Photo</button>
+                    <button class="btn btn-secondary w-100" id="selectFileBtn"><i class="fa-solid fa-file"></i> Select a File</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input to Take Photo -->
+    <input type="file" accept="image/*" capture="environment" style="display: none;" id="cameraInput">
+
+    <!-- Input to Select File -->
+    <input type="file" accept="image/*" style="display: none;" id="fileInput">
 
 
 
@@ -355,20 +376,40 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-
-        document.getElementById('cameraInput').addEventListener('change', function(event) {
-            const file = event.target.files[0];
+        // Abrir o seletor de foto ao clicar no botão de câmera
+        document.getElementById('takePhotoBtn').addEventListener('click', function() {
+            document.getElementById('cameraInput').click();
+        });
+    
+        // Abrir o seletor de arquivos ao clicar no botão de selecionar arquivo
+        document.getElementById('selectFileBtn').addEventListener('click', function() {
+            document.getElementById('fileInput').click();
+        });
+    
+        // Manipular o arquivo selecionado ou capturado
+        function handleFile(file) {
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    document.getElementById('capturedImage').src = e.target.result;
-                    const modal = new bootstrap.Modal(document.getElementById('photoModal'));
-                    modal.show();
+                    const imgElement = document.getElementById('capturedImage');
+                    imgElement.src = e.target.result;
+                    new bootstrap.Modal(document.getElementById('photoModal')).show();
                 };
                 reader.readAsDataURL(file);
             }
+        }
+    
+        // Evento para foto capturada com a câmera
+        document.getElementById('cameraInput').addEventListener('change', function(event) {
+            handleFile(event.target.files[0]);
         });
-
+    
+        // Evento para arquivo de foto selecionado
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            handleFile(event.target.files[0]);
+        });
+    
+        // Confirmar seleção da foto e mostrar o modal correspondente
         document.getElementById('confirmSelection').addEventListener('click', function() {
             const selectedOption = document.querySelector('input[name="options"]:checked');
             if (selectedOption) {
@@ -387,37 +428,17 @@
                 if (modalId) {
                     const photoModal = bootstrap.Modal.getInstance(document.getElementById('photoModal'));
                     photoModal.hide();
-                    const specificModal = new bootstrap.Modal(document.getElementById(modalId));
-                    specificModal.show();
+                    new bootstrap.Modal(document.getElementById(modalId)).show();
                 }
             }
         });
-        function sendOption(option) {
-            const chatBox = document.getElementById('chatBox');
-            const userMessage = document.createElement('div');
-            userMessage.className = 'chat-message user-message';
-            userMessage.textContent = `My Love:`;
-            chatBox.appendChild(userMessage);
-            
-            const botResponse = getBotResponse(option);
-            const botMessage = document.createElement('div');
-            botMessage.className = 'chat-message bot-message';
-            botMessage.textContent = `${botResponse}`;
-            chatBox.appendChild(botMessage);
-            
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        function getBotResponse(option) {
-            const responses = {
-                'Option 1': 'I know baba. I am so sorry thing have to be like this. Promise you we will be together sonner as we can. Never forgte that you are the love of my life and if i need to wait 10 years to see you I will wait because you are the most gorgeous girl I know and we will marry, have our own house, kids and the best life together!',
-                'Option 2': 'You have no idea how horny i am too! You make me fucking horny all the time all the day! Promise you that when we see each other my body will be all yours! Well it already is but u understand me. i am all yours forever!',
-                'Option 3': 'I wish i could be there and give the biggest hub ever. While we are far away from each other i can try to give a virtual hug!',
-                'Option 4': 'I wissshhhhhh all i wanna do is go there and kiss, cuddle, and hug you forever. Promise you we will be together soon and you can do whatever you wanna do with me. Laaabbbbbb u more than anything in this univer babt girl!!!'
-            };
-            return responses[option] || 'Sorry, I did not understand your choice.';
-        }
-        
+    
+        // Repetir a foto ao clicar no botão "Retake Photo"
+        document.getElementById('retakePhoto').addEventListener('click', function() {
+            bootstrap.Modal.getInstance(document.getElementById('photoModal')).hide();
+            new bootstrap.Modal(document.getElementById('photoOptionsModal')).show();
+        });
     </script>
+    
 </body>
 </html>
